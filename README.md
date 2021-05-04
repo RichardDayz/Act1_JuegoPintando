@@ -5,8 +5,10 @@ from freegames import vector
 def line(start, end):
     "Draw line from start to end."
     up()
+    #obtiene las coordenadas del punto inicial
     goto(start.x, start.y)
     down()
+    #obtiene las coordenadas del punto final
     goto(end.x, end.y)
 
 def square(start, end):
@@ -16,8 +18,11 @@ def square(start, end):
     down()
     begin_fill()
 
+    #utiliza un ciclo de rango 4 para dibujar un cuadrado
     for count in range(4):
+        #obtiene el lado
         forward(end.x - start.x)
+        #rota 90°
         left(90)
 
     end_fill()
@@ -28,18 +33,48 @@ def circulo(start, end):
     goto(start.x, start.y)
     down()
     begin_fill()
+    #obtiene el radio del círculo en base a un punto final y uno de inicio
     radio = end.x - start.x
+    #crea un círculo con el radio previamente determinado
     circle(radio)
     end_fill()
     pass  # TODO
 
 def rectangle(start, end):
     "Draw rectangle from start to end."
-    pass  # TODO
+    up()
+    goto(start.x, start.y)
+    down()
+    begin_fill()
+
+    #utiliza un ciclo de rango 2 para dibujar un rectángulo
+    for count in range(2):
+        #obtiene el largo
+        forward(end.x - start.x)
+        #rota 90°
+        left(90)
+        #obtiene la altura dividiendo el largo entre 2
+        forward((end.x - start.x)/2)
+        #rota 90°
+        left(90)
+
+    end_fill()
 
 def triangle(start, end):
     "Draw triangle from start to end."
-    pass  # TODO
+    up()
+    goto(start.x, start.y)
+    down()
+    begin_fill()
+
+    #utiliza un ciclo de rango 3 para dibujar un triángulo equilátero
+    for count in range(3):
+        #obtiene el lado
+        forward(end.x - start.x)
+        #rota 120°
+        left(120)
+
+    end_fill()
 
 def tap(x, y):
     "Store starting point or draw shape."
@@ -67,7 +102,7 @@ onkey(lambda: color('white'), 'W')
 onkey(lambda: color('green'), 'G')
 onkey(lambda: color('blue'), 'B')
 onkey(lambda: color('red'), 'R')
-# Agrego color purple
+#se agrega color purple
 onkey(lambda: color('purple'), 'P')
 onkey(lambda: store('shape', line), 'l')
 onkey(lambda: store('shape', square), 's')
