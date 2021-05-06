@@ -107,4 +107,96 @@ Para que la comida se moviera aleatoriamente pero sin salirse de la ventana del 
                     food.y = 0
 
 ## Actividad 3-Pacman: Mayo 6, 2021
-En la "Actividad 3-Pacman", se recreó el juego clásico de la consola ATARI *Pacman*
+En la "Actividad 3-Pacman", se recreó el juego clásico de la consola ATARI *Pacman*. Se trabajó con un código base que ejecutaba el juego haciendo que los fantasmas se movieran aleatoriamente. Para completar la actividad, se modificó el código para que cambiara el tablero, los fantasmas se movieran más rápido y que además actuaran con un mayor nivel de inteligencia.
+
+Para cambiar el tablero, se modificó la matriz de 1's y 0's que representaba al tablero. De esta forma, al desplegar la matriz actualizada la forma del tablero sería diferente:
+
+    # lista del tablero para simular 20 columnas y 20 renglones actualizado
+    tiles = [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+        0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
+        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+        0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+        0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0,
+        0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0,
+        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0,
+        0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0,
+        0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0,
+        0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+        0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0,
+        0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0,
+        0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+        0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
+        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ]
+
+Para que los fantasmas se movieran más rápido, se modificó la frecuencia con la que la función *ontimer* llamaba la función *move()* creada para el juego. Para hacer esto, se redujo el tiempo que tarda *ontimer* en llamar a *move()* otra vez, disminuyendo de 100ms a 25ms:
+
+        # vuelve a llamar la función dentro de 25 milisegundos
+        ontimer(move, 25)
+        
+Posteriormente, para que los fantasmas actuaran con mayor inteligencia se creó una serie de **if's** que comparan la posición relativa de los fantasmas con respecto al Pacman, y que en base a estas comparaciones tomaran la decisión de hacia dónde moverse:
+
+            else:
+                # se actualiza la dirección de movimiento del mismo
+                # plan guarda la nueva dirección del fantasma
+                # aqui se le agrega inteligencia a los fantasmas
+                if pacman.x > point.x:
+                    options = vector(5,0)
+                elif pacman.y > point.y:
+                    options = vector(0, 5)
+                elif pacman.x < point.x:
+                    options = vector(-5,0)
+                elif pacman.y < point.y:
+                    options = vector(0, -5)
+                else:
+                    movimientos = [
+                        vector(5, 0),
+                        vector(-5, 0),
+                        vector(0, 5),
+                        vector(0, -5),
+                    ]
+                    options = choice(movimientos)
+                course.x = options.x
+                course.y = options.y
+
+Después de realizar los cambios principales al código, se realizaron otros cambios menores que iban más enfocados a la apariencia del juego, así como a añadir información sobre las personas que modificaron el juego:
+1. Se modificaron los colores de los fantasmas:
+    
+            # establece los colores de los fantasmas
+            colores = ['red', 'white', 'pink', 'cyan']
+            k = 0
+
+                # dibuja el fantasma
+                dot(20, colores[k])
+                k = k + 1
+                
+2. Se añadieron los nombres y matrículas de los integrantes del equipo encargados de modificar el juego:
+
+        info = Turtle(visible=False)
+
+            info.up()
+            info.goto(-140,180)
+            info.color('white')
+            info.write('José Andrés Villarreal Montemayor  A00829355', font=('Arial', 8, 'normal'))
+            info.up()
+            info.goto(-140,-200)
+            info.color('white')
+            info.write('Ricardo Daniel Díaz Granados       A00827266', font=('Arial', 8, 'normal'))
+
+3. Se añadió una leyenda que dice "GAME OVER" y el score obtenido por la persona, la cuál se despliega al momento de perder:
+
+            # recorre la lista de fantasmas para ver si coinciden las
+            # posiciones del Pacman y de algún fantasma
+            for point, course in ghosts:
+                if abs(pacman - point) < 20:
+                    writer.goto(-120, 10)
+                    writer.write('Game Over', font=('Arial', 30, 'normal'))
+                    writer.goto(-90, -20)
+                    writer.write(f'Score: {valor}', font=('Arial', 20, 'normal'))
+                    return
