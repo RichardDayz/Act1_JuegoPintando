@@ -18,6 +18,10 @@ food = vector(0, 0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
 
+# se establece una lista con los colores que tomará la snake y la comida
+colores = ['blue', 'pink', 'cyan', 'green', 'orange']
+colorRandom = sample(colores, 2)
+
 def change(x, y):
     "Change snake direction."
     aim.x = x
@@ -30,6 +34,7 @@ def inside(head):
 
 def move():
     "Move snake forward one segment."
+    global colorRandom
     # define la posición de la cabeza dentro del vector "snake"
     head = snake[-1].copy()
     # mueve "head" en la dirección indicada por el usuario
@@ -52,6 +57,9 @@ def move():
         # genera una nueva posición aleatoria para la comida dentro de la ventana
         food.x = randrange(-15, 15) * 10
         food.y = randrange(-15, 15) * 10
+        
+        colorRandom = sample(colores,2)
+        
     else:
         # borra el primer cuadro que se añadió al cuerpo de la serpiente si no se tocó la comida
         snake.pop(0)
@@ -61,10 +69,10 @@ def move():
 
     # dibuja el cuerpo de la serpiente y le asigna "black" como color
     for body in snake:
-        square(body.x, body.y, 9, 'black')
+        square(body.x, body.y, 9, colorRandom[0])
 
     # dibuja la comida y le asigna "green" como color
-    square(food.x, food.y, 9, 'green')
+    square(food.x, food.y, 9, colorRandom[1])
     # actualiza los dibujos de la serpiente y de la comida en la ventana del turtle
     update()
     # llama a la función de movimiento cada 100 ms
