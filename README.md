@@ -2,6 +2,7 @@
 ## Actividad 1-Paint
 hola
 
-  hola
+#hola
+hola
 
 ## Actividad 2-Snake
