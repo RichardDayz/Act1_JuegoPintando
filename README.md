@@ -171,7 +171,7 @@ Después de realizar los cambios principales al código, se realizaron otros cam
             # establece los colores de los fantasmas
             colores = ['red', 'white', 'pink', 'cyan']
             k = 0
-
+-------------------------------------------------------------------------------------------------------
                 # dibuja el fantasma
                 dot(20, colores[k])
                 k = k + 1
@@ -179,7 +179,7 @@ Después de realizar los cambios principales al código, se realizaron otros cam
 2. Se añadieron los nombres y matrículas de los integrantes del equipo encargados de modificar el juego:
 
         info = Turtle(visible=False)
-
+-------------------------------------------------------------------------------------------------------
             info.up()
             info.goto(-140,180)
             info.color('white')
