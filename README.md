@@ -105,3 +105,6 @@ Para que la comida se moviera aleatoriamente pero sin salirse de la ventana del 
                 if not inside(food):
                     food.x = 0
                     food.y = 0
+
+## Actividad 3-Pacman: Mayo 6, 2021
+En la "Actividad 3-Pacman", se recreó el juego clásico de la consola ATARI *Pacman*
