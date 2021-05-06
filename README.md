@@ -26,6 +26,7 @@ state = {'score': 0}
 # hace invisible la flecha creando dos objetos de la clase Turtle
 path = Turtle(visible=False)
 writer = Turtle(visible=False)
+info = Turtle(visible=False)
 
 # da la dirección del Pacman
 aim = vector(5, 0)
@@ -126,6 +127,14 @@ def world():
                 path.up()
                 path.goto(x + 10, y + 10)
                 path.dot(2, 'white')
+    info.up()
+    info.goto(-140,180)
+    info.color('white')
+    info.write('José Andrés Villarreal Montemayor  A00829355', font=('Arial', 8, 'normal'))
+    info.up()
+    info.goto(-140,-180)
+    info.color('white')
+    info.write('Ricardo Daniel Díaz Granados       A00827266', font=('Arial', 8, 'normal'))
 
 def move():
     # establece los colores de los fantasmas
