@@ -1,5 +1,4 @@
-# Act2_Snake
-#José Andrés Villarreal Montemayor  A00829355
+# Act2_Snake#José Andrés Villarreal Montemayor  A00829355
 #Ricardo Daniel Díaz Granados       A00827266
 """Reflexión Andrés: Esta actividad me hizo tener ciertos problemas que no entendía y me frustró bastante,
 sin embargo, gracias a escuchar dudas de compañeros, entendí que debía usar variables globales para poder
@@ -74,9 +73,6 @@ def move():
 
         #obtiene dos colores aleatorios de la lista previamente dada
         colorRandom = sample(colores,2)
-
-        
-        colorRandom = sample(colores,2)
         
     else:
         # borra el primer cuadro que se añadió al cuerpo de la serpiente si no se tocó la comida
@@ -94,7 +90,6 @@ def move():
     # dibuja el cuerpo de la serpiente y le asigna el primer color obtenido aleatoriamente
     for body in snake:
         square(body.x, body.y, 9, colorRandom[0])
-
 
     # dibuja la comida y le asigna el segundo color obtenido aleatoriamente
     # dibuja la comida y le asigna "green" como color
