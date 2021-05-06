@@ -28,7 +28,9 @@ def circulo(start, end):
     goto(start.x, start.y)
     down()
     begin_fill()
+    # obtiene el radio del círculo en base a un punto final y uno de inicio
     radio = end.x - start.x
+    # crea un círculo con el radio previamente determinado
     circle(radio)
     end_fill()
     pass  # TODO
