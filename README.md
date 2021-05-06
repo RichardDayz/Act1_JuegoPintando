@@ -1,107 +1,234 @@
-# Bitácora Semana Tec-Herramientas computacionales: el arte de la programación
-## Actividad 1-Paint: Mayo 4, 2021
-En la "Actividad 1-Paint" tuvimos la tarea de crear un programa usando el módulo **turtle** de Python. Para completar esta actividad fue necesario añadir un color adicional, así como realizar la programación necesaria para dibujar un círculo, un rectángulo y un triángulo.
+# Act3_Pacman
+#José Andrés Villarreal Montemayor  A00829355
+#Ricardo Daniel Díaz Granados       A00827266
 
-Para dibujar el círculo Andrés añadió las siguientes líneas de código:
+"""Pacman, classic arcade game.
 
-    #utiliza un ciclo de rango 4 para dibujar un cuadrado
+Exercises
+
+1. Change the board.
+2. Change the number of ghosts.
+3. Change where pacman starts.
+4. Make the ghosts faster/slower.
+5. Make the ghosts smarter.
+
+"""
+
+# se hace import de todas las librerías necesarias al inicio
+
+# elige un valor aleatorio de una lista
+from random import choice
+from turtle import *
+from freegames import floor, vector
+
+# almacena la puntuación (cantidad de galletas consumidas por el Pacman)
+state = {'score': 0}
+# hace invisible la flecha creando dos objetos de la clase Turtle
+path = Turtle(visible=False)
+writer = Turtle(visible=False)
+
+# da la dirección del Pacman
+aim = vector(5, 0)
+
+# crea pacman en la posición (-40,-80)
+pacman = vector(-40, -80)
+# lista de listas con la posición inicial de los fantasmas y su dirección de movimiento
+ghosts = [
+    [vector(-180, 160), vector(5, 0)],
+    [vector(-180, -160), vector(0, 5)],
+    [vector(100, 160), vector(0, -5)],
+    [vector(100, -160), vector(-5, 0)],
+]
+
+# lista del tablero para simular 20 columnas y 20 renglones
+tiles = [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+    0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
+    0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+    0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0,
+    0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0,
+    0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+    0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+    0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0,
+    0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+    0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+    0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0,
+    0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
+    0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0,
+    0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+    0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+]
+
+# dibuja un square con su esq. inf. izq en (x, y)
+def square(x, y):
+    "Draw square using path at (x, y)."
+    path.up()
+    path.goto(x, y)
+    path.down()
+    path.begin_fill()
+
     for count in range(4):
-        #obtiene el lado
-        forward(end.x - start.x)
-        #rota 90°
-        left(90)
+        path.forward(20)
+        path.left(90)
 
-    end_fill()
+    path.end_fill()
 
-Por otro lado, para añadir un color nuevo, escribió lo siguiente:
+def offset(point):
+    "Return offset of point in tiles."
+    x = (floor(point.x, 20) + 200) / 20
+    y = (180 - floor(point.y, 20)) / 20
+    index = int(x + y * 20)
+    return index
+
+# retorna True si point es un tile válido
+def valid(point):
+    "Return True if point is valid in tiles."
+    index = offset(point)
+
+    # si la celda es 0 regresa False (muro)
+    if tiles[index] == 0:
+        return False
+
+    index = offset(point + 19)
+
+    # si la celda es 0 regresa False (muro)
+    if tiles[index] == 0:
+        return False
+
+    return point.x % 20 == 0 or point.y % 20 == 0
+
+def world():
+    "Draw world using path."
+    bgcolor('black')
+    path.color('blue')
+
+    # recorre toda la lista de (tiles)
+    for index in range(len(tiles)):
+        # extrae el valor que existe en la posición index
+        tile = tiles[index]
+
+        # si el valor 1
+        if tile > 0:
+            # calcula la x, y donde se dibuja el square
+            x = (index % 20) * 20 - 200    # (21 % 20) * 20 - 200 = -180
+            y = 180 - (index // 20) * 20   # 180 - (21 // 20) * 20 = 160
+            square(x, y)                   # dibuja el square (-180, 160)
+
+            # dibuja la galleta sobre el square
+            if tile == 1:
+                path.up()
+                path.goto(x + 10, y + 10)
+                path.dot(2, 'white')
+
+def move():
+    # establece los colores de los fantasmas
+    colores = ['red', 'white', 'pink', 'cyan']
+    k = 0
+    "Move pacman and all ghosts."
+    writer.undo()
+    valor = state['score']
+    # muestra el score en la ventana del juego
+    writer.write(f'Score: {valor}')
+
+    # limpia la ventana
+    clear()
+
+    # si es una posición válida (no pared) pacman.move(aim)
+    if valid(pacman + aim):
+        pacman.move(aim)
     
-    #se agrega color purple
-    onkey(lambda: color('purple'), 'P')
+    # retorna la posición del Pacman en el tablero
+    index = offset(pacman)
 
-Para dibujar el rectángulo, Ricardo añadió el siguiente código:
+    #1 (camino)
+    if tiles[index] == 1:
+        # a esa posición le asigna 2 (comer la galleta)
+        tiles[index] = 2
+        # se incrementa el score
+        state['score'] += 1
+        # calcula la posición x, y del Pacman
+        x = (index % 20) * 20 - 200
+        y = 180 - (index // 20) * 20
+        # dibuja el square (sin la galleta)
+        square(x, y)
 
-    def rectangle(start, end):
-        "Draw rectangle from start to end."
+    up()
+    # se va a la posición del Pacman
+    goto(pacman.x + 10, pacman.y + 10)
+    # primera vez que dibuja el Pacman
+    dot(20, 'yellow')
+
+    # [vector(-180,160), vector(5,0)]
+    for point, course in ghosts:
+        # valida si el fantasma (point) se puede mover en course
+        if valid(point + course):
+            point.move(course)
+        else: # si no se puede mover el fantasma en esa dirección
+            # se actualiza la dirección del movimiento del mismo
+            options = [
+                vector(5, 0),
+                vector(-5, 0),
+                vector(0, 5),
+                vector(0, -5),
+            ]
+            # plan guarda la nueva dirección del fantasma
+            plan = choice(options)
+            course.x = plan.x
+            course.y = plan.y
+        # levanta
         up()
-        goto(start.x, start.y)
-        down()
-        begin_fill()
+        # mueve a la posición del fantasma
+        goto(point.x + 10, point.y + 10)
+        # le asigna un color a cada fantasma
+        dot(20, colores[k])
+        k = k + 1
 
-        #utiliza un ciclo de rango 2 para dibujar un rectángulo
-        for count in range(2):
-            #obtiene el largo
-            forward(end.x - start.x)
-            #rota 90°
-            left(90)
-            #obtiene la altura dividiendo el largo entre 2
-            forward((end.x - start.x)/2)
-            #rota 90°
-            left(90)
+    update()
+    # recorre la lista de fantasmas para ver si coinciden las
+    # posiciones del Pacman y de algún fantasma
+    for point, course in ghosts:
+        if abs(pacman - point) < 20:
+            # si el Pacman toca a un fantasma, se despliega "GAME OVER" y el score obtenido
+            writer.goto(-110, 10)
+            writer.write('GAME OVER', font=('Arial', 20, 'normal'))
+            writer.goto(-80, -20)
+            writer.write(f'Score: {valor}', font=('Arial', 20, 'normal'))
+            return
+    # vuelve a llamar la función dentro de 100 milisegundos
+    ontimer(move, 100)
 
-        end_fill()
+def change(x, y):
+    "Change pacman aim if valid."
+    if valid(pacman + vector(x, y)):
+        aim.x = x
+        aim.y = y
 
-Finalmente, para dibujar el triángulo, añadió al código las siguientes líneas:
+# inicializa la ventana ancho y alto 420, 420
+# 0,0 indica la ubicación de la esquina  sup. izq. de la ventana en mi pantalla
+setup(420, 420, 370, 0)
 
-    def triangle(start, end):
-        "Draw triangle from start to end."
-        up()
-        goto(start.x, start.y)
-        down()
-        begin_fill()
+# esconde la flecha
+hideturtle()
 
-        #utiliza un ciclo de rango 3 para dibujar un triángulo equilátero
-        for count in range(3):
-            #obtiene el lado
-            forward(end.x - start.x)
-            #rota 120°
-            left(120)
-
-        end_fill()
-
-## Actividad 2-Snake: Mayo 5, 2021
-En la "Actividad 2-Snake" utilizamos los módulos **turtle**, **random** y **freegames** de Python para recrear el clásico juego de la serpiente. Partimos de un código base el cuál ya ejecutaba el juego, pero le hicimos modificaciones al código para que tanto la comida como la serpiente cambiaran de color aleatoriamente, adoptando un color nuevo de entre una lista de 5 colores distintos. Además de esto, hicimos que la comida se moviera aleatoriamente pero sin salirse de la ventana del **turtle** previamente delimitada.
-
-Para que los colores cambiaran aleatoriamente pero sin que la serpiente y la comida tuvieran el mismo color, Andrés hizo lo siguiente:
-1. Definió una lista con los 5 colores que podían adoptar tanto la serpiente como la comida, y definió una variable llamada *colorRandom*:
-
-        # se establece una lista con los colores que tomará la snake y la comida
-        colores = ['blue', 'pink', 'cyan', 'green', 'orange']
-        colorRandom = sample(colores, 2)
-        
-2. Estableció la variable *colorRandom* como una variable **global**, insertando estas líneas de código dentro de la función *move()* creada para el juego:
-        
-        def move():
-            "Move snake forward one segment."
-            global colorRandom
-            
-3. Para que la serpiente y la comida cambiaran de color, hizo que cada vez que la serpiente coma la comida, se cree una lista con dos colores aleatorios distintos extraídos de la lista *colores*, y se guarden en la variable *colorRandom*:
-        
-                #obtiene dos colores aleatorios de la lista previamente dada
-                colorRandom = sample(colores,2)
-                
-4. Finalmente, hizo que la serpiente tomara como color el primer valor guardado en *colorRandom*, mientras que la comida tomaría el segundo valor de esta misma lista:
-
-            for body in snake:
-                square(body.x, body.y, 9, colorRandom[0])
-
-            # dibuja la comida y le asigna el segundo color obtenido aleatoriamente
-            # dibuja la comida y le asigna "green" como color
-            square(food.x, food.y, 9, colorRandom[1])
-            
-Para que la comida se moviera aleatoriamente pero sin salirse de la ventana del **turtle**, Ricardo añadió lo siguiente:
-1. Creó una lista con las posibles direcciones (expresadas en forma de vectores) en las que se podía mover la comida:
-        
-        # lista con las posibles direcciones en las que se puede mover la comida
-        movimiento_food = [vector(10, 0), vector(-10,0), vector(0,10), vector(0,-10)]
-        
-2. Finalmente, hizo que cuando la comida saliera de la ventana **turtle**, esta regresara al origen. Estas líneas de código las incluyo dentro del **else** de la función *move()*:
-
-            else:
-                # borra el primer cuadro que se añadió al cuerpo de la serpiente si no se tocó la comida
-                snake.pop(0)
-                # mueve la comida de manera aleatoria en una de las 4 direcciones previamente establecidas
-                food.move(movimiento_food[randrange(0, 4)])
-                # si la comida sale de la ventana, la devuelve al origen
-                if not inside(food):
-                    food.x = 0
-                    food.y = 0
+# oculta toda forma de dibujar
+tracer(False)
+# mueve la turtle writer a la posición 160, 160
+writer.goto(160, 160)
+writer.color('white')
+writer.write(state['score'])
+# escucha los eventos del teclado
+listen()
+# en caso de que el usuario oprima la tecla indicada, manda llamar a la función change
+# con los argumentos indicados
+onkey(lambda: change(5, 0), 'Right')
+onkey(lambda: change(-5, 0), 'Left')
+onkey(lambda: change(0, 5), 'Up')
+onkey(lambda: change(0, -5), 'Down')
+world()
+move()
+done()
