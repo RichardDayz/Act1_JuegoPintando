@@ -1,4 +1,5 @@
-# Act2_Snake#José Andrés Villarreal Montemayor  A00829355
+# Act2_Snake
+#José Andrés Villarreal Montemayor  A00829355
 #Ricardo Daniel Díaz Granados       A00827266
 """Reflexión Andrés: Esta actividad me hizo tener ciertos problemas que no entendía y me frustró bastante,
 sin embargo, gracias a escuchar dudas de compañeros, entendí que debía usar variables globales para poder
