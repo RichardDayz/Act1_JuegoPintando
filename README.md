@@ -46,10 +46,14 @@ def inside(head):
 def move():
     "Move snake forward one segment."
     global colorRandom
+
     # define la posición de la cabeza dentro del vector "snake"    
+    # define la posición de la cabeza dentro del vector "snake"
     head = snake[-1].copy()
+    
     # mueve "head" en la dirección indicada por el usuario
     head.move(aim)
+    
     # verifica si la cabeza está dentro de la ventana o si se superpone con "snake"
     # si se cumple una de las condiciones, "head"=rojo y acaba el juego
     if not inside(head) or head in snake:
@@ -67,8 +71,13 @@ def move():
         # genera una nueva posición aleatoria para la comida dentro de la ventana
         food.x = randrange(-15, 15) * 10
         food.y = randrange(-15, 15) * 10
+
         #obtiene dos colores aleatorios de la lista previamente dada
         colorRandom = sample(colores,2)
+
+        
+        colorRandom = sample(colores,2)
+        
     else:
         # borra el primer cuadro que se añadió al cuerpo de la serpiente si no se tocó la comida
         snake.pop(0)
@@ -86,8 +95,11 @@ def move():
     for body in snake:
         square(body.x, body.y, 9, colorRandom[0])
 
+
     # dibuja la comida y le asigna el segundo color obtenido aleatoriamente
+    # dibuja la comida y le asigna "green" como color
     square(food.x, food.y, 9, colorRandom[1])
+    
     # actualiza los dibujos de la serpiente y de la comida en la ventana del turtle
     update()
     # llama a la función de movimiento cada 100 ms
