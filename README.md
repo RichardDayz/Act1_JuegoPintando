@@ -2,16 +2,20 @@
 ## Actividad 1-Paint: Mayo 4, 2021
 En la "Actividad 1-Paint" tuvimos la tarea de crear un programa usando el módulo **turtle** de Python. Para completar esta actividad fue necesario añadir un color adicional, así como realizar la programación necesaria para dibujar un círculo, un rectángulo y un triángulo.
 
-Para dibujar el círculo Andrés añadió las siguientes líneas de código:
+Para dibujar el círculo Andrés añadió las siguientes líneas de código, que consisten en la obtención del radio del círculo, para posteriormente dibujarlo y rellenarlo:
 
-    #utiliza un ciclo de rango 4 para dibujar un cuadrado
-    for count in range(4):
-        #obtiene el lado
-        forward(end.x - start.x)
-        #rota 90°
-        left(90)
-
-    end_fill()
+    def circulo(start, end):
+        "Draw circle from start to end."
+        up()
+        goto(start.x, start.y)
+        down()
+        begin_fill()
+        #obtiene el radio del círculo en base a un punto final y uno de inicio
+        radio = end.x - start.x
+        #crea un círculo con el radio previamente determinado
+        circle(radio)
+        end_fill()
+        pass  # TODO
 
 Por otro lado, para añadir un color nuevo, escribió lo siguiente:
     
@@ -74,7 +78,7 @@ Para que los colores cambiaran aleatoriamente pero sin que la serpiente y la com
             "Move snake forward one segment."
             global colorRandom
             
-3. Para que la serpiente y la comida cambiaran de color, hizo que cada vez que la serpiente coma la comida, se cree una lista con dos colores aleatorios distintos extraídos de la lista *colores*, y se guarden en la variable *colorRandom*:
+3. Para que la serpiente y la comida cambiaran de color, hizo que cada vez que la serpiente coma la comida, se cree una lista con la función de *sample* de la librería *Random* que elige aleatoriamente 2 items dentro de la lista *colores* sin repetirse, y se guarden en la variable *colorRandom*:
         
                 #obtiene dos colores aleatorios de la lista previamente dada
                 colorRandom = sample(colores,2)
